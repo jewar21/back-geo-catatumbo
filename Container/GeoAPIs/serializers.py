@@ -1,12 +1,7 @@
 from rest_framework import serializers
-from GeoAPIs.models import TypeProducer, UserProducer
-
-class TypeProducerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model=TypeProducer
-        fields=['name']
+from GeoAPIs.models import UserProductorDb
         
-class UserProducerSerializer(serializers.ModelSerializer):
+class UserProductorSerializer(serializers.ModelSerializer):
     class Meta:
-        model=UserProducer
+        model=UserProductorDb
         fields="__all__" # Incluye todos los campos del modelo
