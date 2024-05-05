@@ -32,6 +32,10 @@ Por consola escribimos:
 
 - **`python manage.py runserver`** (Correr el proyecto)
 
+### ¿Qué hacer siempre que se instale una librería? ###
+
+***`pip freeze > requirements.txt`*** Con este comando por consola actualizamos el archivo requirements con todos los paquetes instalados en el entorno virtual.
+
 
 ## Documentación Adicional
 
