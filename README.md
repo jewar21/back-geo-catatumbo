@@ -1,20 +1,40 @@
 # backGeoCatatumbo
-Acá se encontrará la parte administrativa y las APIS del site
+
+## Descripción
+
+**backGeoCatatumbo** es un proyecto que integra funcionalidades administrativas y APIs para el sitio web. Este proyecto utiliza tecnologías modernas y librerías especializadas para ofrecer soluciones robustas y eficientes.
+
+## Tecnologías Utilizadas
+
+- **Django**: Un framework de Python para el desarrollo de aplicaciones web.
+- **Django REST Framework**: Para construir APIs web.
+- **GeoPandas**: Una biblioteca de Python para manipular datos geoespaciales.
+- **MongoDB**: Un sistema de base de datos NoSQL para almacenamiento de datos.
+
+### Creación del Entorno Virtual
+
+Primero, necesitas crear un entorno virtual para aislar las dependencias de tu proyecto. Abre tu terminal y ejecuta:
+- **.\venv\Scripts\activate**
+
+### Creación del Proyecto Django
+
+Luego creamos el archivo `requirements.txt` en el escribimos `django == [version]`, Reemplaza `version` con la versión específica de Django que deseas utilizar.
+Por consola escribimos: 
+- **pip install -r .\requirements.txt**
+Por último para crear el proyecto:
+- **django-admin startproject name_project** Reemplaza `name_project` con el nombre que desees para tu proyecto.
+
+### Cómo arrancar el proyecto ###
+Virtualización
+- **.venv\Scripts\activate** 
+Instalación de dependencias
+- **pip install -r requirements.txt**
+Correr el proyecto
+- **python manage.py runserver**
 
 
-Se crea el archivo requirements.txt
-Se crea una virtualización:
-py -m venv venv
-Para activar el entorno virtual: 
-.\venv\Scripts\activate
-en requirements.txt: django == version 
-En consola: pip install -r .\requeriments.txt 
-para crear el proyecto: 
-django-admin startproject name_project
+## Documentación Adicional
 
-Django REST framework
-https://www.django-rest-framework.org/
-GeoPandas
-https://geopandas.org/en/stable/docs.html
-MongoDB
-https://www.mongodb.com/docs/
+- **Django REST Framework**: [Documentación oficial](https://www.django-rest-framework.org/)
+- **GeoPandas**: [Documentación oficial](https://geopandas.org/en/stable/docs.html)
+- **MongoDB**: [Documentación oficial](https://www.mongodb.com/docs/)
