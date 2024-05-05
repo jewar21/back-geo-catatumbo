@@ -20,17 +20,17 @@ Primero, necesitas crear un entorno virtual para aislar las dependencias de tu p
 
 Luego creamos el archivo `requirements.txt` en el escribimos `django == [version]`, Reemplaza `version` con la versión específica de Django que deseas utilizar.
 Por consola escribimos: 
-- **pip install -r .\requirements.txt**
-Por último para crear el proyecto:
-- **django-admin startproject name_project** Reemplaza `name_project` con el nombre que desees para tu proyecto.
+- **`pip install -r .\requirements.txt`**
+##### Por último para crear el proyecto: #####
+- **`django-admin startproject name_project`** Reemplaza `name_project` con el nombre que desees para tu proyecto.
 
 ### Cómo arrancar el proyecto ###
-Virtualización
-- **.venv\Scripts\activate** 
-Instalación de dependencias
-- **pip install -r requirements.txt**
-Correr el proyecto
-- **python manage.py runserver**
+
+- **`.venv\Scripts\activate`** (Virtualización)
+
+- **`pip install -r requirements.txt`** (Instalación de dependencias)
+
+- **`python manage.py runserver`** (Correr el proyecto)
 
 
 ## Documentación Adicional
