@@ -14,7 +14,7 @@
 ### Creación del Entorno Virtual
 
 Primero, necesitas crear un entorno virtual para aislar las dependencias de tu proyecto. Abre tu terminal y ejecuta:
-- **`.\venv\Scripts\activate`**
+- **`pip install pipenv`**
 
 ### Creación del Proyecto Django
 
