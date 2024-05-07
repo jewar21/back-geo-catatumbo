@@ -1,24 +1,35 @@
 from django.db import models
-from django.contrib.auth.hashers import make_password
-from django.contrib.auth.hashers import check_password
-# from django.core.exceptions import ValidationError
-# from django.contrib.auth.models import User
-
+from db_connection import get_mongo_client, get_database
 
 from .constants import TYPES_PRODUCERS_CHOICES, MUNICIPALITY_CHOICES
+
+client = get_mongo_client()
+database = get_database(client)
 
 # Create your models here.
 
 class UserProductorDb(models.Model):
-    name = models.CharField(max_length=100)
-    lastname = models.CharField(max_length=100)
-    dependency = models.CharField(max_length=100)
-    email = models.EmailField(unique=True)
-    password = models.CharField(max_length=128)
+    name = models.CharField(max_length=100, verbose_name="Nombre", blank=False, null=False)
+    lastname = models.CharField(max_length=100, verbose_name="Apellido", blank=False, null=False)
+    dependency = models.CharField(max_length=100, verbose_name="Dependencia", blank=False, null=False)
+    email = models.EmailField(unique=True, verbose_name="Correo Electrónico", blank=False, null=False)
+    password = models.CharField(max_length=128, verbose_name="Contraseña", blank=False, null=False)
     type_producer = models.CharField(
-        max_length=50, choices=TYPES_PRODUCERS_CHOICES)
+        max_length=50, choices=TYPES_PRODUCERS_CHOICES, verbose_name="Tipo de productor", blank=False, null=False)
     municipality = models.CharField(
-        max_length=50, choices=MUNICIPALITY_CHOICES)
+        max_length=50, choices=MUNICIPALITY_CHOICES, verbose_name="Municipio", blank=False, null=False)
+
+    class Meta:
+        db_table = 'Producers'
+        verbose_name = 'Producer'
+        verbose_name_plural = 'Producers'
+
+    @classmethod
+    def save_object(cls, instance, *args, **kwargs):
+        database.insert_one(instance.__dict__)
+
+    def __str__(self) -> str:
+        return self.name
 
 
 # class RegistroArborizacion(models.Model):

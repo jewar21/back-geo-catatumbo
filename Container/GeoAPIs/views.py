@@ -1,9 +1,7 @@
-from django.shortcuts import render
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_protect  
 from django.views import View
 from rest_framework.parsers import JSONParser
 from django.http.response import JsonResponse
-from django.db import IntegrityError
 from django.http import HttpResponse
 from rest_framework.decorators import api_view
 
@@ -11,8 +9,7 @@ from GeoAPIs.models import  UserProductorDb
 from GeoAPIs.serializers import UserProductorSerializer
 
 # Vistas para Usuarios Productores
-
-@csrf_exempt
+@csrf_protect
 @api_view(['GET', 'POST'])
 def user_producer_list(request):
     if request.method == 'GET':
@@ -27,7 +24,7 @@ def user_producer_list(request):
             return JsonResponse(serializer.data, status=201)
         return JsonResponse(serializer.errors, status=400)
 
-@csrf_exempt
+@csrf_protect
 @api_view(['GET', 'PUT', 'DELETE'])
 def user_producer_detail(request, pk):
     try:
