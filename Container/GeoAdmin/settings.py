@@ -79,35 +79,16 @@ WSGI_APPLICATION = 'GeoAdmin.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'djongo',
-#         'NAME': 'geo_cat_db',
-#         'ENFORCE_SCHEMA': False,
-#         'CLIENT': {
-#             'host': 'mongodb+srv://jeguerreror:yKqFqH09LxGZVKgq@cluster0.hmv7pqa.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', # Replace with your MongoDB server address
-#             # 'port': 27017,               # Replace with your MongoDB port if different
-#             # 'username': 'jeguerreror', # Replace with your MongoDB username (optional)
-#             # 'password': 'yKqFqH09LxGZVKgq', # Replace with your MongoDB password (optional)
-#             # 'authSource': 'your_auth_database', # Replace with your MongoDB authentication database (optional)
-#         },
-#     }
-# }
-
-import mongoengine
-mongoengine.connect(
-    db='geo_cat_db', 
-    host='mongodb+srv://jeguerreror:yKqFqH09LxGZVKgq@cluster0.hmv7pqa.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', 
-    username='jeguerreror', 
-    password='yKqFqH09LxGZVKgq')
-
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgis_34_sample',
+        'USER': 'postgres',
+        'PASSWORD': '2024',
+        'HOST': 'localhost',
+        'PORT': '5432'
+    }
+}
 
 
 # Password validation
@@ -150,3 +131,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+AUTH_USER_MODEL = 'GeoAPIs.UserProductorDb'

@@ -1,35 +1,69 @@
 from django.db import models
-from db_connection import get_mongo_client, get_database
+from django.contrib.auth.models import (
+    AbstractBaseUser,
+    BaseUserManager,
+    PermissionsMixin
+)
+# from db_connection import get_mongo_client, get_database
 
 from .constants import TYPES_PRODUCERS_CHOICES, MUNICIPALITY_CHOICES
 
-client = get_mongo_client()
-database = get_database(client)
+class UserManager(BaseUserManager):
+    def create_user(self, email, password, **extra_fields):
+        if not email:
+            raise ValueError('El usuario debe tener un correo electrónico')
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using= self._db)
+        
+        return user
+        
+    def create_superuser(self, email, password):
+        user = self.create_user(email, password)
+        user.is_superuser = True
+        user.is_staff = True
+        user.save(using= self._db)
+        
+        return user
 
-# Create your models here.
-
-class UserProductorDb(models.Model):
-    name = models.CharField(max_length=100, verbose_name="Nombre", blank=False, null=False)
-    lastname = models.CharField(max_length=100, verbose_name="Apellido", blank=False, null=False)
-    dependency = models.CharField(max_length=100, verbose_name="Dependencia", blank=False, null=False)
-    email = models.EmailField(unique=True, verbose_name="Correo Electrónico", blank=False, null=False)
-    password = models.CharField(max_length=128, verbose_name="Contraseña", blank=False, null=False)
+class UserProductorDb(AbstractBaseUser, PermissionsMixin):
+    name = models.CharField(
+        max_length=100, verbose_name="Nombre", blank=False, null=False)
+    lastname = models.CharField(
+        max_length=100, verbose_name="Apellido", blank=False, null=False)
+    dependency = models.CharField(
+        max_length=100, verbose_name="Dependencia", blank=False, null=False)
+    email = models.EmailField(
+        unique=True, verbose_name="Correo Electrónico", blank=False, null=False)
+    password = models.CharField(
+        max_length=128, verbose_name="Contraseña", blank=False, null=False)
     type_producer = models.CharField(
         max_length=50, choices=TYPES_PRODUCERS_CHOICES, verbose_name="Tipo de productor", blank=False, null=False)
     municipality = models.CharField(
         max_length=50, choices=MUNICIPALITY_CHOICES, verbose_name="Municipio", blank=False, null=False)
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default= True, verbose_name="Estado", blank=False, null=False)
+    
+    objects = UserManager()
+    
+    USERNAME_FIELD = 'email'
 
     class Meta:
         db_table = 'Producers'
         verbose_name = 'Producer'
         verbose_name_plural = 'Producers'
+    
 
-    @classmethod
-    def save_object(cls, instance, *args, **kwargs):
-        database.insert_one(instance.__dict__)
+    # @classmethod
+    # def _get_by_natural_key(cls, username):
+    #     try:
+    #         return cls.objects.get(email=username)
+    #     except cls.DoesNotExist:
+    #         return None
 
-    def __str__(self) -> str:
-        return self.name
+    # def __str__(self):
+    #     return self.email 
+
 
 
 # class RegistroArborizacion(models.Model):
