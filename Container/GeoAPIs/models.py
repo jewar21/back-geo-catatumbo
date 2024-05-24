@@ -4,9 +4,9 @@ from django.contrib.auth.models import (
     BaseUserManager,
     PermissionsMixin
 )
-# from db_connection import get_mongo_client, get_database
 
 from .constants import TYPES_PRODUCERS_CHOICES, MUNICIPALITY_CHOICES
+
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password, **extra_fields):
@@ -14,17 +14,18 @@ class UserManager(BaseUserManager):
             raise ValueError('El usuario debe tener un correo electrónico')
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
-        user.save(using= self._db)
-        
+        user.save(using=self._db)
+
         return user
-        
+
     def create_superuser(self, email, password):
         user = self.create_user(email, password)
         user.is_superuser = True
         user.is_staff = True
-        user.save(using= self._db)
-        
+        user.save(using=self._db)
+
         return user
+
 
 class UserProductorDb(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(
@@ -41,28 +42,18 @@ class UserProductorDb(AbstractBaseUser, PermissionsMixin):
         max_length=50, choices=TYPES_PRODUCERS_CHOICES, verbose_name="Tipo de productor", blank=False, null=False)
     municipality = models.CharField(
         max_length=50, choices=MUNICIPALITY_CHOICES, verbose_name="Municipio", blank=False, null=False)
-    is_staff = models.BooleanField(default=False)
-    is_active = models.BooleanField(default= True, verbose_name="Estado", blank=False, null=False)
-    
+    is_staff = models.BooleanField(default=False) #para otorgarle acceso a las áreas administrativas.
+    is_active = models.BooleanField(
+        default=True, verbose_name="Estado", blank=False, null=False)
+
     objects = UserManager()
-    
+
     USERNAME_FIELD = 'email'
 
     class Meta:
         db_table = 'Producers'
         verbose_name = 'Producer'
         verbose_name_plural = 'Producers'
-    
-
-    # @classmethod
-    # def _get_by_natural_key(cls, username):
-    #     try:
-    #         return cls.objects.get(email=username)
-    #     except cls.DoesNotExist:
-    #         return None
-
-    # def __str__(self):
-    #     return self.email 
 
 
 
